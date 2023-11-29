@@ -38,23 +38,26 @@ enum Expectation {
     Draw,
     Lose,
 }
+/*
+* if Win then
+* */
 impl Expectation {
     fn value(&self, other: &Move) -> u32 {
         match self {
             Expectation::Win => match other {
-                Move::Rock => 6,
-                Move::Paper => 0,
-                Move::Scissors => 3,
+                Move::Rock => 6 + 2,
+                Move::Paper => 6 + 3,
+                Move::Scissors => 6 + 1,
             },
             Expectation::Draw => match other {
-                Move::Rock => 3,
-                Move::Paper => 1,
-                Move::Scissors => 2,
+                Move::Rock => 3 + 1,
+                Move::Paper => 3 + 2,
+                Move::Scissors => 3 + 3,
             },
             Expectation::Lose => match other {
-                Move::Rock => 0,
-                Move::Paper => 2,
-                Move::Scissors => 1,
+                Move::Rock => 0 + 3,
+                Move::Paper => 0 + 1,
+                Move::Scissors => 0 + 2,
             },
         }
     }
@@ -124,7 +127,6 @@ fn main() {
             (Move::Paper, Move::Rock) => Outcome::Win,
             (Move::Scissors, Move::Paper) => Outcome::Win,
         };
-        // let outcome_new_str = match
         total_score += outcome.value() + my_move_value;
     }
     println!(" total score: {}", total_score);
