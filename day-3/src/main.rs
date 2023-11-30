@@ -26,40 +26,23 @@ fn main() {
             };
             priority_sum += new_priority;
         }
-        // if index % 3 == 0 && index != 0 {
-        //     let first_set: HashSet<char> = lines[index - 3].chars().collect();
-        //     let second_set: HashSet<char> = lines[index - 2].chars().collect();
-        //     let third_set: HashSet<char> = lines[index - 1].chars().collect();
-        //     let intersection: HashSet<char> =
-        //         first_set.intersection(&second_set).copied().collect();
-        //     let intersection_2: HashSet<char> =
-        //         intersection.intersection(&third_set).copied().collect();
-        //     let priority = intersection_2.iter().next().unwrap();
-        //     let new_priority = match priority {
-        //         'a'..='z' => *priority as u32 - 96,
-        //         'A'..='Z' => *priority as u32 - 38,
-        //         _ => 0,
-        //     };
-        //     prority_sum_of_badge += new_priority;
-        // }
+        if (index + 1) % 3 == 0 && index != 0 {
+            let first_set: HashSet<char> = lines[index - 2].chars().collect();
+            let second_set: HashSet<char> = lines[index - 1].chars().collect();
+            let third_set: HashSet<char> = lines[index - 0].chars().collect();
+            let intersection: HashSet<char> =
+                first_set.intersection(&second_set).copied().collect();
+            let intersection_2: HashSet<char> =
+                intersection.intersection(&third_set).copied().collect();
+            let priority = intersection_2.iter().next().unwrap();
+            let new_priority = match priority {
+                'a'..='z' => *priority as u32 - 96,
+                'A'..='Z' => *priority as u32 - 38,
+                _ => 0,
+            };
+            prority_sum_of_badge += new_priority;
+        }
     }
-    let mut i = 0;
-    while i < length {
-        let first_set: HashSet<char> = lines[i].chars().collect();
-        let second_set: HashSet<char> = lines[i + 1].chars().collect();
-        let third_set: HashSet<char> = lines[i + 2].chars().collect();
-        let intersection: HashSet<char> = first_set.intersection(&second_set).copied().collect();
-        let intersection_2: HashSet<char> =
-            intersection.intersection(&third_set).copied().collect();
-        let priority = intersection_2.iter().next().unwrap();
-        let new_priority = match priority {
-            'a'..='z' => *priority as u32 - 96,
-            'A'..='Z' => *priority as u32 - 38,
-            _ => 0,
-        };
-        prority_sum_of_badge += new_priority;
-        i += 3;
-    }
-    println!("{}", priority_sum);
-    println!("{}", prority_sum_of_badge);
+    println!("Total priority sum: {}", priority_sum);
+    println!("Total priority sum of badge: {}", prority_sum_of_badge);
 }
