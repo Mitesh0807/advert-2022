@@ -7,6 +7,7 @@ fn main() {
     let lines: Vec<&str> = contents.lines().collect();
     let length = lines.len();
     let mut count = 0;
+    let mut parital_overlap_count = 0;
     for i in 0..length {
         let line = lines[i];
         let parts: Vec<&str> = line.split(",").collect();
@@ -18,15 +19,35 @@ fn main() {
         let first_elf_end = range_of_first_elf[1].parse::<u32>().unwrap();
         let second_elf_start = range_of_second_elf[0].parse::<u32>().unwrap();
         let second_elf_end = range_of_second_elf[1].parse::<u32>().unwrap();
-        // 7-10 , 11-13
-        // 11-13 , 7-10
         if first_elf_start <= second_elf_start && first_elf_end >= second_elf_end && line != "" {
             count += 1;
+            parital_overlap_count += 1;
             continue;
         }
         if first_elf_start >= second_elf_start && first_elf_end <= second_elf_end && line != "" {
             count += 1;
+            parital_overlap_count += 1;
+            continue;
+        }
+        // for remaninng  partial overlap
+        if (first_elf_end == second_elf_start
+            || first_elf_start == second_elf_end
+            || first_elf_end == second_elf_end
+            || first_elf_start == second_elf_start)
+            && line != ""
+        {
+            parital_overlap_count += 1;
+            continue;
+        }
+        if first_elf_end >= second_elf_start && first_elf_end <= second_elf_end && line != "" {
+            parital_overlap_count += 1;
+            continue;
+        }
+        if first_elf_start >= second_elf_start && first_elf_start <= second_elf_end && line != "" {
+            parital_overlap_count += 1;
+            continue;
         }
     }
     println!("count: {}", count);
+    println!("count of partial overlap: {}", parital_overlap_count);
 }
